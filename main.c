@@ -9,7 +9,6 @@ stack_t *head = NULL;
  */
 int main(int argc, char **argv)
 {
-	int line_number;
 	char *command;
 	size_t len = 0;
 	FILE *in;
@@ -20,9 +19,10 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	in = fopen(argv[1], "r");
-	for (line_number = 1; getline(&command, &len, in) != EOF; line_number++)
+	for (; getline(&command, &len, in) != EOF;)
 		parser(command);
 	fclose(in);
+	free(command);
 	return (0);
 }
 /**
@@ -42,7 +42,6 @@ int parser(char *command)
 	if (token[0] == '#')
 		return (0);
 	exec(token, atoi(value));
-	free(token);
 	return (0);
 }
 /**

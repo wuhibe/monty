@@ -26,7 +26,6 @@ stack_t *push(stack_t *head, int num)
 		new->prev = head;
 		new->next = temp;
 	}
-	free(new);
 	return (head);
 }
 /**
