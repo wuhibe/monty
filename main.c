@@ -1,7 +1,6 @@
+#define _GNU_SOURCE
 #include "header.h"
-
 stack_t *head = NULL;
-
 /**
  * main - where the program starts
  * @argc: count of arguments given to program
@@ -13,19 +12,17 @@ int main(int argc, char **argv)
 	int line_number;
 	char *command;
 	size_t len = 0;
+	FILE *in;
 
 	if (argc != 2)
 	{
 		printf("Usage: ./monty <filename>\n");
 		return (1);
 	}
-	FILE *in = fopen(argv[1], "r");
-
+	in = fopen(argv[1], "r");
 	for (line_number = 1; getline(&command, &len, in) != EOF; line_number++)
 		parser(command);
-
 	fclose(in);
-
 	return (0);
 }
 /**
