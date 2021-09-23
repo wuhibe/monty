@@ -1,10 +1,12 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef HEADER_H
+#define HEADER_H
 
+#define _GNU_SOURCE
 #include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
+#include <stdarg.h>
 #include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -33,11 +35,32 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+extern stack_t *head;
+typedef void (*op_func)(stack_t **, unsigned int);
+int parse_line(char *buffer, int line_number, int format);
+int len_chars(FILE *);
+void find_func(char *, char *, int, int);
+stack_t *create_node(int n);
+void free_nodes(void);
+void pall(stack_t **, unsigned int);
+void push_in(stack_t **, unsigned int);
+void add_to_queue(stack_t **, unsigned int);
+void call_fun(op_func, char *, char *, int, int);
+void pint_all(stack_t **, unsigned int);
+void pop(stack_t **, unsigned int);
+void nop(stack_t **, unsigned int);
+void swap(stack_t **, unsigned int);
+void add(stack_t **, unsigned int);
+void sub(stack_t **, unsigned int);
+void divide(stack_t **, unsigned int);
+void mul(stack_t **, unsigned int);
+void mod(stack_t **, unsigned int);
+void pchar(stack_t **, unsigned int);
+void pstr(stack_t **, unsigned int);
+void rotl(stack_t **, unsigned int);
+void err(int error_code, ...);
+void more_err(int error_code, ...);
+void string_err(int error_code, ...);
+void rotr(stack_t **, unsigned int);
 
-stack_t *push(stack_t *head, int n);
-void pall(stack_t *head);
-stack_t *pop(stack_t *head);
-int parser(char *command);
-void exec(char *func, int value);
-
-#endif /* MAIN_H */
+#endif
